@@ -15,7 +15,7 @@ Este se usa para el manejo de datos en componentes. este Hook mantiene dos valor
 ### useEffect
 De manera sencilla este Hook se usa para crear efectos secundarios en componentes algun ejemplo pueden ser efectos que se ejecuten despues que el componente se se ha renderizado. un ejemplo  los llamados de las de una Api. Hasta para limpiar efectos anteriores.
 
-### useContext 
+### useContext  
 Lo que hace es acceder a los contextos de React para que sea util compartir recursos globales sin necesidad de pasar las props de manera manual entre componentes.
 
 ### Ejemplo 
