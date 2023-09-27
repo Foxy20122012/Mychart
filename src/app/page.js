@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
+import useHasMounted from '@/hooks/useHasMounted';
 
 import { Line } from 'react-chartjs-2';
 import {
