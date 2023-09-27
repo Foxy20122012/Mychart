@@ -1,6 +1,6 @@
 'use client'
 
-// pages/graph.js
+
 import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
@@ -77,37 +77,44 @@ const Graph = () => {
 
   return (
     <div className="">
-      <h1>Generador de Gráficas</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Expresión algebraica: </label>
+      <h1 className='px-4 text-center m-4 font-bold  text-xl'>Generador de Gráficas</h1>
+      <form onSubmit={handleSubmit} 
+      className="grid grid-cols-1 md:grid-cols-3 gap-4 px-4"
+      >
+        <div className='mb-4'>
+          <label  className="text-center justify-center block text-sm font-medium text-gray-700">Expresión algebraica: </label>
           <input
             type="text"
             value={expression}
             onChange={(e) => setExpression(e.target.value)}
+            className="border border-gray-400 rounded-md p-2 w-full"
           />
         </div>
         <div>
-          <label>Intervalo inicial: </label>
+          <label className="text-center justify-center block text-sm font-medium text-gray-700">Intervalo inicial: </label>
           <input
             type="number"
             value={start}
             onChange={(e) => setStart(parseInt(e.target.value))}
+            className="border border-gray-400 rounded-md p-2 w-full"
           />
         </div>
         <div>
-          <label>Intervalo final: </label>
+          <label className="text-center justify-center block text-sm font-medium text-gray-700">Intervalo final: </label>
           <input
             type="number"
             value={end}
             onChange={(e) => setEnd(parseInt(e.target.value))}
+            className="border border-gray-400 rounded-md p-2 w-full"
           />
         </div>
       
       </form>
-      <div className="h-80 ">
+      <div className='flex justify-center items-center '>
+      <div  className=' h-[1000px] w-[1300px] '>
+      
         {chartData && (
-          <Line
+          <Line className='border border-gray-800 rounded-xl'
             data={chartData}
             options={{
               scales: {
@@ -122,6 +129,8 @@ const Graph = () => {
           />
         )}
       </div>
+     </div>
+     
     </div>
   );
 };
