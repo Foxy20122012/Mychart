@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
+
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -34,12 +35,12 @@ const Graph = () => {
       const labels = [];
       const datasets = [];
 
-      // Define la función para la expresión algebraica ingresada
+      // Función para evaluar la expresión ingresada
       const func = (x) => {
         try {
           return evaluate(expression.replace(/x/g, x));
         } catch (error) {
-          return NaN; // Si hay un error en la evaluación, se mostrará como NaN en la gráfica
+          return NaN; // Si hay un error en la evaluación, se mostrará como NaN en la gráfica. Eso quiere decir que no se mostrará nada en la grafica aparecera en blanco.
         }
       };
 
@@ -76,11 +77,13 @@ const Graph = () => {
   };
 
   return (
+    <div>
+    
     <div className="">
       <h1 className='px-4 text-center m-4 font-bold  text-xl'>Generador de Gráficas</h1>
     
       <div className='flex justify-center items-center '>
-      <div  className=' h-[1000px] w-[1300px] '>
+      <div  className=' h-[9500px] w-[1200px] '>
       <GraphForm
         expression={expression}
         start={start}
@@ -107,7 +110,7 @@ const Graph = () => {
         )}
       </div>
      </div>
-     
+     </div>
     </div>
   );
 };
