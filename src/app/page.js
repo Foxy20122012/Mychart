@@ -19,8 +19,14 @@ ChartJS.register(
   PointElement,
   
 );
+
+import { evaluate } from 'mathjs';
+
 const Graph = () => {
   const [chartData, setChartData] = useState(null);
+  const [expression, setExpression] = useState('x'); // Expresión algebraica por defecto
+  const [start, setStart] = useState(0);
+  const [end, setEnd] = useState(10);
 
   useEffect(() => {
     // Función para calcular los datos de la gráfica
@@ -28,37 +34,27 @@ const Graph = () => {
       const labels = [];
       const datasets = [];
 
-      // Define las funciones para las tres curvas
-      const functions = [
-        {
-          label: "f(x) = x",
-          function: (x) => x,
-          borderColor: "rgba(75, 192, 192, 1)",
-        },
-        {
-          label: "f(x) = x²",
-          function: (x) => x * x,
-          borderColor: "rgba(153, 102, 255, 1)",
-        },
-        {
-          label: "f(x) = x * log(x)",
-          function: (x) => x * Math.log(x),
-          borderColor: "rgba(255, 206, 86, 1)",
-        },
-      ];
+      // Define la función para la expresión algebraica ingresada
+      const func = (x) => {
+        try {
+          return evaluate(expression.replace(/x/g, x));
+        } catch (error) {
+          return NaN; // Si hay un error en la evaluación, se mostrará como NaN en la gráfica
+        }
+      };
 
-      for (let i = 1; i <= 5; i++) {
+      for (let i = start; i <= end; i++) {
         labels.push(i);
       }
 
-      functions.forEach((func) => {
-        const data = labels.map((x) => func.function(x));
-        datasets.push({
-          label: func.label,
-          borderColor: func.borderColor,
-          data: data,
-          fill: false,
-        });
+      // Calcula los datos para la expresión ingresada
+      const data = labels.map((x) => func(x));
+
+      datasets.push({
+        label: `f(x) = ${expression}`,
+        borderColor: "rgba(75, 192, 192, 1)",
+        data: data,
+        fill: false,
       });
 
       // Configura los datos para el gráfico
@@ -68,14 +64,48 @@ const Graph = () => {
       });
     };
 
-    calculateChartData(); // Calcula los datos de la gráfica al cargar la página
+    calculateChartData(); // Calcula los datos de la gráfica al cargar la página o cuando cambie la expresión o intervalos
 
-  }, []);
+  }, [expression, start, end]);
+
+  // Manejador de envío del formulario
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Realiza el cálculo de la gráfica cuando se envía el formulario
+    calculateChartData();
+  };
 
   return (
     <div className="">
-      Hello Graph
-      <div className="h-96">
+      <h1>Generador de Gráficas</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Expresión algebraica: </label>
+          <input
+            type="text"
+            value={expression}
+            onChange={(e) => setExpression(e.target.value)}
+          />
+        </div>
+        <div>
+          <label>Intervalo inicial: </label>
+          <input
+            type="number"
+            value={start}
+            onChange={(e) => setStart(parseInt(e.target.value))}
+          />
+        </div>
+        <div>
+          <label>Intervalo final: </label>
+          <input
+            type="number"
+            value={end}
+            onChange={(e) => setEnd(parseInt(e.target.value))}
+          />
+        </div>
+      
+      </form>
+      <div className="h-80 ">
         {chartData && (
           <Line
             data={chartData}
@@ -84,7 +114,7 @@ const Graph = () => {
                 y: {
                   beginAtZero: true,
                   ticks: {
-                    maxTicksLimit: 5, // Configura el número máximo de marcas en el eje Y
+                    maxTicksLimit: 5,
                   },
                 },
               },
@@ -97,3 +127,5 @@ const Graph = () => {
 };
 
 export default Graph;
+
+
