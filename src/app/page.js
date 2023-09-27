@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import useHasMounted from '@/hooks/useHasMounted';
+import Loading from '@/components/shared/Loading';//Spinner de Carga
 
 import { Line } from 'react-chartjs-2';
 import {
@@ -76,6 +77,11 @@ const Graph = () => {
     // Realiza el cálculo de la gráfica cuando se envía el formulario
     calculateChartData();
   };
+
+  const hasMounted = useHasMounted();
+  if (!hasMounted) {
+    return  <Loading />;
+  }
 
   return (
     <div>

@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import useHasMounted from '@/hooks/useHasMounted';
+import Loading from '@/components/shared/Loading';//Spinner de Carga
 import {
   Chart as ChartJS,
   LineElement,
@@ -72,6 +73,11 @@ const GraphEstatico = () => {
     calculateChartData(); // Calcula los datos de la gráfica al cargar la página
 
   }, []);
+
+  const hasMounted = useHasMounted();
+  if (!hasMounted) {
+    return  <Loading />;
+  }
 
   return (
     <div className='m-4 justify-center text-center font-bold text-xl'>
