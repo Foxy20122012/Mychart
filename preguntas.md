@@ -46,3 +46,5 @@ const useHasMounted = () => {
 
 export default useHasMounted
 
+
+Se hace esto en el renderizado en la Hidratacion porque puede ser que algunas cosas ya esten cargadas pero sus funcionalidades aun no o los datos no lleguen aun.
